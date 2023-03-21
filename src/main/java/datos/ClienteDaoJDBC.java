@@ -7,14 +7,14 @@ import java.util.*;
 public class ClienteDaoJDBC implements ClienteDao {
 
     private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo "
-            + "FROM control_cliente.cliente";
+            + "FROM cliente";
     private static final String SQL_SELECT_BY_ID = "SELECT id_cliente, nombre, apellido, email, telefono, saldo "
-            + "FROM control_cliente.cliente WHERE id_cliente = ?";
-    private static final String SQL_INSERT = "INSERT INTO control_cliente.cliente(nombre, apellido, email, telefono, saldo) "
+            + "FROM cliente WHERE id_cliente = ?";
+    private static final String SQL_INSERT = "INSERT INTO cliente(nombre, apellido, email, telefono, saldo) "
             + "VALUES(?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE control_cliente.cliente "
+    private static final String SQL_UPDATE = "UPDATE cliente "
             + "SET nombre=?, apellido=?, email=?, telefono=?, saldo=? WHERE id_cliente=?";
-    private static final String SQL_DELETE = "DELETE FROM control_cliente.cliente"
+    private static final String SQL_DELETE = "DELETE FROM cliente"
             + "WHERE id_cliente = ?";
 
     @Override
@@ -26,7 +26,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         List<Cliente> clientes = new ArrayList<>();
 
         try {
-            conn = Conexion.getConexion();
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -57,7 +57,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         ResultSet rs = null;
 
         try {
-            conn = Conexion.getConexion();
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, cliente.getIdCliente());
             rs = stmt.executeQuery();
@@ -91,7 +91,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         int rows = 0;
 
         try {
-            conn = Conexion.getConexion();
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, cliente.getNombre());
             stmt.setString(2, cliente.getApellido());
@@ -116,7 +116,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         int rows = 0;
 
         try {
-            conn = Conexion.getConexion();
+            conn = Conexion.getConnection();
             stmt = conn.prepareCall(SQL_UPDATE);
             stmt.setString(1, cliente.getNombre());
             stmt.setString(2, cliente.getApellido());
@@ -141,7 +141,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         PreparedStatement stmt = null;
         int rows = 0;
         try {
-            conn = Conexion.getConexion();
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, cliente.getIdCliente());
 
