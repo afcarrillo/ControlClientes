@@ -14,7 +14,7 @@ public class ClienteDaoJDBC implements ClienteDao {
             + "VALUES(?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE cliente "
             + "SET nombre=?, apellido=?, email=?, telefono=?, saldo=? WHERE id_cliente=?";
-    private static final String SQL_DELETE = "DELETE FROM cliente"
+    private static final String SQL_DELETE = "DELETE FROM cliente "
             + "WHERE id_cliente = ?";
 
     @Override
@@ -61,7 +61,7 @@ public class ClienteDaoJDBC implements ClienteDao {
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, cliente.getIdCliente());
             rs = stmt.executeQuery();
-            rs.absolute(1); // nos posicionamos en el primer registro
+            rs.next(); // nos posicionamos en el primer registro
 
             String nombre = rs.getString("nombre");
             String apellido = rs.getString("apellido");

@@ -6,6 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
+                <!-- Tarjeta para listado clientes -->
                 <div class="card">
                     <div class="card-header">
                         <h4>Listado de Clientes</h4>
@@ -21,9 +22,9 @@
                         </thead>
                         <tbody>
                             <!-- Iteramos cada elemento de la lista de clientes -->
-                            <c:forEach var="cliente" items="${clientes}">
+                            <c:forEach var="cliente" items="${clientes}" varStatus="status">
                                 <tr>
-                                    <td>${cliente.idCliente}</td>
+                                    <td>${status.count}</td>
                                     <td>${cliente.nombre} ${cliente.apellido}</td>
                                     <td>
                                         <fmt:formatNumber value="${cliente.saldo}" type="currency"/>
@@ -41,8 +42,28 @@
                 </div>
             </div>
             <div class="col-md-3">
-                otro
+                <!-- Tarjeta para total clientes -->
+                <div class="card text-center bg-danger text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total Saldo</h3>
+                        <h4 class="display-4">
+                            <fmt:formatNumber value="${totalSaldo}" type="currency"/>
+                        </h4>
+                    </div>
+                </div>
+                <!-- Tarjeta para total saldo -->
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total Clientes</h3>
+                        <h4 class="display-4">
+                            <i class="fas fa-users"></i> ${totalClientes}
+                        </h4>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Agregar cliente MODAL -->
+<jsp:include page="/WEB-INF/pages/cliente/agregarCliente.jsp"/>
